@@ -1,0 +1,46 @@
+# REDIS URI
+REDIS_URL=redis://xxxxxx/y
+
+#MONGO URI
+MONGO_URL=mongodb://xxxxxx/y
+
+# DISCORD API STUFF
+OAUTH2_CLIENT_ID=
+OAUTH2_CLIENT_SECRET=
+OAUTH2_REDIRECT_URI=http://xxx/confirm_login
+MEE6_TOKEN=
+
+# Flask secret key
+SECRET_KEY=
+
+# Virtual_host of the website
+VIRTUAL_HOST=
+
+# LETS ENCRYPT
+LETSENCRYPT_HOST=
+LETSENCRYPT_EMAIL=
+
+# My Anime List credentials
+MAL_USERNAME=
+MAL_PASSWORD=
+
+# Carbonitex related
+CARBONITEX_KEY=
+
+# For youtube api
+GOOGLE_API_KEY=
+
+# Data dog
+DD_API_KEY=
+DD_APP_KEY=
+
+# Paypal
+PAYPAL_MODE=
+PAYPAL_CLIENT_ID=
+PAYPAL_CLIENT_SECRET=
+
+# Mee6 default playing game
+MEE6_GAME=
+
+#IMGUR
+IMGUR_ID=

@@ -1,0 +1,97 @@
+{% extends 'dash_base.html' %}
+{% block dash_content %}
+	<div class="container">
+		<div class="row">
+			{% include 'sidebar.html' %}
+			{% set csrf =  csrf_token() %}
+				<div class="col-md-8">
+					<h3>Moderator <a href="?disable=1" class="btn btn-warning btn-xs">Disable</a></h3>
+					{% include 'flash.html' %}
+					<form id="levels" method="POST" action="{{url_for('update_moderator', server_id=server['id'])}}">
+						<div class="form-group">
+							<input name=_csrf_token type=hidden value="{{ csrf }}">
+							<h3>!Clear
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="clear" {% if clear %} checked {% endif %}> Aktivieren/Deaktivieren
+									</label>
+								</div>
+							</h3>
+							<div class="well well-sm">
+								<strong>Usage: </strong> <br />
+								<strong>!clear @someone</strong> Löscht die Nachrichten von <em>@someone</em> Maximum: 100 Nachrichten<br />
+								<strong>!clear xx</strong> Löscht die letzten xx Nachrichten über 100 Nachrichten können deinen Discord Client crashen.<br />
+							</div>
+				 <h3>!Slowmode
+				 <div class="checkbox">
+				 <label>
+				 <input type="checkbox" name="slowmode" {% if slowmode %} checked {% endif %}> Aktivieren/Deaktivieren
+				 </label>
+				 </div>
+				 </h3>
+				 <div class="well well-sm">
+				 <strong>Usage: </strong> <br />
+				 <strong>!slowmode xx</strong> Aktiviert den Slowmode f&uuml; <em>xx</em> Sekunden.<br />
+				 <strong>!slowoff</strong> Deaktiviert den Slowmode
+				  </div>
+				 <h3>!Mute
+					 <div class="checkbox">
+						 <label>
+							 <input type="checkbox" name="mute" {% if mute %} checked {% endif %}> Aktivieren/Deaktivieren
+						 </label>
+					 </div>
+				 </h3>
+				 <div class="well well-sm">
+					 <strong>Usage: </strong> <br />
+					 <strong>!mute @someone</strong> Mutet <em>@someone</em> im Channel.<br />
+					 <strong>!unmute @someone</strong> Unmutet <em>@someone</em> im Channel.
+				 </div>
+				 <h3>Blacklist</h3>
+
+				 <input class="form-control input-lg" name="banned_words" data-role="tagsinput" value="{{banned_words}}" type="text" id="banned_words">
+				 <div class="well well-sm">
+					 <strong>Bei mehreren Wörtern benutze ein , </strong> <br />
+					 <strong>Example: </strong>f*ck,sh*t,wh*re
+				 </div>
+
+
+				 <h3>Moderator Rollen</h3>
+				 <input type="text" data-role="tagsinput" name="moderator_roles" class="moderator_roles"/><br />
+				 <div class="well well-sm">
+					 Rollen die die Commands verwenden dürfen
+				 </div>
+				 <script>
+$(function() {
+	var roles = new Bloodhound({
+		datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+		queryTokenizer: Bloodhound.tokenizers.whitespace,
+		local: {{guild_roles|tojson|safe}}
+	});
+	roles.initialize();
+
+	var elt = $('.moderator_roles');
+	elt.tagsinput({
+		itemValue: 'id',
+		itemText: 'name',
+		typeaheadjs: {
+			name: 'roles',
+			displayKey: 'name',
+			source: roles.ttAdapter()
+		}
+	});
+	{% for role in moderator_roles %}
+		elt.tagsinput('add', {{role|tojson|safe}});
+	{% endfor %}
+});
+				 </script>
+				 <br />
+				 <button type="submit" class="btn btn-primary">Update</button>
+						</div>
+					</form>
+				</div>
+
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+{% endblock %}

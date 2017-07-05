@@ -1,0 +1,31 @@
+{% extends 'dash_base.html' %}
+{% block dash_content %}
+	<div class="container">
+		<div class="row">
+			{% include 'sidebar.html' %}
+
+			<div class="col-md-8">
+				<h3>Help Me! <a href="?disable=1" class="btn btn-warning btn-xs">Disable</a></h3>
+				{% include 'flash.html' %}
+				<center>
+					<p>
+					<form method="POST" action="{{url_for('update_help', server_id=server.id)}}">
+						{% set csrf = csrf_token() %}
+							<input name="_csrf_token" type=hidden value="{{csrf}}">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" name="whisp" {% if whisp %} checked {%endif%}> Sendet die Hilfe als private Nachricht</label>
+
+							</div>
+							<input type="submit" class="btn btn-primary" value="Update"><br /><br />
+					</form>
+					<img src="https://media.giphy.com/media/WRflm1O6tvbnG/giphy.gif">
+					<h1>Benutze <strong>!help</strong> auf dem Server ;) !</h1>
+					</p>
+				</center>
+			</div>
+
+		</div>
+	</div>
+
+{% endblock %}

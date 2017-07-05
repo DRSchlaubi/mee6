@@ -1,0 +1,132 @@
+{% extends 'full-page.html' %}
+{% block content %}
+<style type="text/css">
+#mee6website{
+	a:link  color: #d90000; 
+	a:visited  color: #cc6666; 
+}
+</style>
+	<div class="jumbotron home-jumbotron">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8 animated bounceInLeft v-align">
+					<center>
+						<p>
+						<img src="{{url_for('static', filename='img/cookie.jpg')}}" class="img-circle">
+						</p>
+						<p>Hi, Ich bin Cookie und freue mich über jede Unterstützung .</p>
+					</center>
+					<p>
+					<center><strong>Mee6</strong> lebt von Spenden der Community</p></center>
+					<p>
+					<center><strong>Um zu spenden besuche die offizielle <a id="mee6website" href="http://mee6.xyz/donate">Mee6</a> Seite.</strong></center>
+					</p>
+					<p><br />
+						
+            	<div class="col-sm-12">
+              	
+          	</div>
+					</p>
+					
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	</div>
+ <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+<script>
+$(document).ready(function() {
+          $("#slider").slider({
+              animate: true,
+              value: 5,
+              min: 5,
+              max: 100,
+              step: 5,
+              slide: function(event, ui) {
+                  update(5,ui.value); //changed
+              }
+          });
+
+          update(5,5);
+      });
+
+      //changed. now with parameter
+      function update(slider,val) {
+        //changed. Now, directly take value from ui.value. if not set (initial, will use current value.)
+        var $amount = val;
+
+         $( "#amount" ).val($amount);
+         $( "#amount-label" ).text($amount);
+				 $( "#points" ).text($amount*100);
+         $('#slider a').html('<label style="font-size:15px;"><span class="fa fa-chevron-left"></span> &euro;'+$amount+' <span class="fa fa-chevron-right"></span></label>');
+      }
+</script>
+<style>
+.ui-widget-content {
+	border: 1px solid #bdc3c7;
+	background: #006687;
+	color: #222222;
+	margin-top: 4px;
+}
+
+.ui-slider .ui-slider-handle {
+	position: absolute;
+	z-index: 2;
+	width: 5.2em;
+	height: 2.2em;
+	cursor: default;
+	margin: 0 -40px auto !important;
+	text-align: center;	
+	line-height: 30px;
+	color: #FFFFFF;
+	font-size: 15px;
+}
+
+.ui-slider .ui-slider-handle .glyphicon {
+	color: #FFFFFF;
+	margin: 0 3px; 
+	font-size: 11px;
+	opacity: 0.5;
+}
+
+.ui-corner-all {
+	border-radius: 20px;
+}
+
+.ui-slider-horizontal .ui-slider-handle {
+	top: -.9em;
+}
+
+.ui-state-default,
+.ui-widget-content .ui-state-default {
+	border: 1px solid #f9f9f9;
+	background: #006687;
+}
+
+.ui-slider-horizontal .ui-slider-handle {
+	margin-left: -0.5em;
+}
+
+.ui-slider .ui-slider-handle {
+	cursor: pointer;
+}
+
+.ui-slider a,
+.ui-slider a:focus {
+	cursor: pointer;
+	outline: none;
+}
+.price-slider {
+	margin-bottom: 70px;
+}
+
+.price-slider span {
+	font-weight: 200;
+	display: inline-block;
+	color: #fff;
+	font-size: 13px;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'full-page.html' %}
+{% block content %}
+	<div class="jumbotron home-jumbotron">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8 animated bounceInLeft v-align">
+					<center>
+						<p>
+						<img src="{{url_for('static', filename='img/cookie.jpg')}}" class="img-circle">
+						</p>
+						<p>
+						<h2>Thank you very much for your donation</h2>
+						<h1>You are AWESOME!</h1>
+						</p>
+						<p>
+						<h2>You have now <i class="fa fa-gift"></i> {{points}} points</h2>
+						</p>
+					</center>
+					</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	</div>
+{% endblock %}

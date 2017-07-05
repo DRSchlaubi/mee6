@@ -1,0 +1,96 @@
+{% extends 'dash_base.html' %}
+{% block dash_content %}
+	<div class="container">
+		<div class="row">
+			{% include 'sidebar.html' %}
+
+			<div class="col-md-8">
+				<h3>Commands <a href="?disable=1" class="btn btn-warning btn-xs">Deaktivieren</a></h3>
+				{% include 'flash.html' %}
+				{% set csrf =  csrf_token() %}
+
+				<h4>Commands Hinzufügen</h4>
+					<form id="add_form" method="post" action="{{url_for('add_command', server_id=server.id)}}">
+						<input name=_csrf_token type=hidden value="{{ csrf }}">
+						<div class="input-group">
+							<span class="input-group-addon">!</span>
+							<input class="form-control" type="text" name="cmd_name" placeholder="command">
+						</div><br />
+						<textarea class="form-control cmd_message" name="cmd_message" id="cmd_message" placeholder="message"></textarea>
+						<br />
+						<center><a href="#" id="add" class="btn btn-success"><i class="fa fa-pencil"></i> Hinzuf&uuml;gen</a></center>
+					</form>
+					<script>
+$('#add').click(function(){
+	$('#add_form').submit();
+})
+					</script>
+					<table class="table table-striped table-hover ">
+						<thead>
+							<tr>
+								<th>Command</th>
+								<th>Nachricht</th>
+								<th>Aktion</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for cmd in commands %}
+								<tr>
+									<td><h4><strong>{{cmd['name']}}</strong></h4></td>
+									<td>
+										<form action="{{url_for('add_command', server_id=server.id)}}?edit=1"  method='post' id="{{cmd['name'][1:]}}">
+											<input name=_csrf_token type=hidden value="{{ csrf }}">
+											<input name="cmd_name" type="hidden" value="{{cmd['name']}}">
+											<textarea class="form-control cmd_message" name="cmd_message" rows="3" style="resize:vertical;">{{cmd['message']}}</textarea>
+										</form>
+									</td>
+									<td><a href="#" id="edit_{{cmd['name'][1:]}}" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i> Edit</a>
+										<a href="{{url_for('delete_command', server_id=server.id, command=cmd['name'])}}" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> L&ouml;schen</a></td>
+									<script>
+$('#edit_{{cmd['name'][1:]}}').click(function(){
+	$('#{{cmd['name'][1:]}}').submit()
+})
+									</script>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+			</div>
+
+		</div>
+	</div>
+	<script>
+		$(function() {
+			var roles = new Bloodhound({
+				datumTokenize: Bloodhound.tokenizers.obj.whitespace('name'),
+				queryTokenizer: Bloodhound.tokenizers.whitespace,
+				local: {{guild_roles|tojson|safe}}
+			});
+			roles.initialize();
+
+			var elt =  $('.roles');
+			elt.tagsinput({
+				itemValue: 'id',
+				itemText: 'name',
+				typeaheadjs: {
+					name: 'roles',
+					displayKey: 'name',
+					source: roles.ttAdapter()
+				}
+			});
+			{% for role in roles %}
+				elt.tagsinput('add', {{role|tojson|safe}});
+			{% endfor %}
+	</script>
+<script>
+$(function(){
+	$(".cmd_message").mention({
+		queryBy: ['name', 'username'],
+		users: {{guild_members|tojson|safe}}
+	});
+});
+</script>
+	<script src="{{url_for('static', filename='js/mention.js')}}"></script>
+	<script src="{{url_for('static', filename='js/bootstrap-typeahead.js')}}"></script>
+	<link href="{{url_for('static', filename='css/recommended-styles.css')}}" rel="stylesheet">
+{% endblock %}

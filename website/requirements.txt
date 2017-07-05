@@ -1,0 +1,8 @@
+flask
+requests_oauthlib
+redis
+gunicorn
+gevent
+pymongo
+paypalrestsdk
+setproctitle

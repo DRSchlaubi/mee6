@@ -1,0 +1,43 @@
+{% extends 'dash_base.html' %}
+{% block dash_content %}
+	<div class="container">
+		<div class="row">
+			{% include 'sidebar.html' %}
+			{% set csrf =  csrf_token() %}
+				<div class="col-md-8">
+					<h3>Twitch <a href="?disable=1" class="btn btn-warning btn-xs">Deaktivieren</a></h3>
+					{% include 'flash.html' %}
+					<form id="streamers" method="POST" action="{{url_for('update_streamers', server_id=server['id'])}}">
+						<div class="form-group">
+							<input name=_csrf_token type=hidden value="{{ csrf }}">
+							<label class="control-label" for="announcement_channel">hannel</label>
+							<select class="form-control input-lg" id="announcement_channel" name="announcement_channel">
+								{% for channel in guild_channels %}
+									<option value="{{channel.id}}"{%if channel.id == announcement_channel.id%} selected{%endif%}>#{{channel.name}}</option>
+								{% endfor %}
+							</select>
+							<div class="well well-sm">
+								Hier wird angekündigt wenn du einen Stream startest!<br />
+							</div>
+							<label class="control-label" for="announcement_msg">Nachricht</label>
+							<input class="form-control input-lg" name="announcement_msg" value="{{announcement_msg}}" type="text" id="announcement_msg">
+							<div class="well well-sm">
+								<strong>Tips:</strong> Use <strong>{streamer}</strong> for the streamer name and <strong>{link}</strong> for his channel link.
+							</div>
+							<h3>Twitch Channels</h3>
+							<input type="text" data-role="tagsinput" value="{{streamers}}" name="streamers" data-role="tagsinput"><br />
+							<h3>Hitbox Channels</h3>
+							<input type="text" data-role="tagsinput" value="{{hitbox_streamers}}"
+							name="hitbox_streamers" data-role="tagsinput">
+							<br />
+							<br />
+							<button type="submit" class="btn btn-primary">Aktualisieren</button>
+						</div>
+					</form>
+				</div>
+
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+{% endblock %}

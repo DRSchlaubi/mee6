@@ -1,0 +1,32 @@
+{% extends 'full-page.html' %}
+{% block content %}
+	<div class="jumbotron home-jumbotron">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4 animated bounceInDown text-center">
+					<img src="{{ url_for('static', filename='img/meeseeks.png') }}" class="hidden-xs">
+					<h3>Wähle einen <img src="{{ url_for('static', filename='img/discord-logo.svg') }}" class="discord-logo2"> server : </h3>
+				</div>
+			</div>
+			<div class="row row-centered animated bounceInUp">
+					{% for server in user_servers %}
+						<div class="col-md-1 col-xs-3 text-center col-centered" style="font-size:13px; color:#FFF;">
+							<a href="{{url_for('dashboard', server_id=server['id'])}}" style="color:#FFF">
+								<img {% if server['icon'] %}src="https://cdn.discordapp.com/icons/{{server['id']}}/{{server['icon']}}.jpg"{%endif%} {% if not server['icon'] %}avatar="{{server['name']}}" {%endif%}  style="width:100%; border:2px #FFF solid;" class="img-circle" data-toggle="tooltip" title="{{server['name']}}" data-placement="bottom" ></a>
+						</div>
+					{% else %}
+							<h3>... Bist du wirklich auf einem Server!</h3>
+							<h3>Erstelle einen ! <br/>Ich warte solange auf dich ;) </h3>
+					{% endfor %}
+			</div>
+			</div>
+			<script>
+$(document).ready(function(){
+	    $('[data-toggle="tooltip"]').tooltip(); 
+});
+			</script>
+			<script src="{{url_for('static', filename='js/letter-avatar.js')}}"></script>
+
+		</div>
+	</div>
+{% endblock %}

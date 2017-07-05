@@ -1,0 +1,45 @@
+{% extends 'full-page.html' %}
+{% block content %}
+	<div class="jumbotron home-jumbotron">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 animated bounceInLeft v-align">
+					{% import 'macros/plugin.html' as plugin %}
+					<h3>Beste Features</h3>
+					<div class="list-group" style="color:#006687; opacity:0.6;">
+						{{ plugin.view(
+						'Levels',
+						view='plugin_levels',
+						no_links=True,
+						description='Deine User können mit Nachrichten <strong>XP</strong> und <strong> Level</strong> verdienen',
+						server=server
+						)}}
+						{{ plugin.view(
+						'Commands',
+						view='plugin_commands',
+						description='Erstelle deine eigenen Commands!',
+						server=server,
+						no_links=True,
+						)}}
+						{{ plugin.view(
+						'AnimeAndMango',
+						pretty_name='Animu and Mango',
+						view='plugin_help',
+						no_links=True,
+						description='Durchsuche das Internet nach animes unds mangas.',
+						server=server
+						)}}
+					</div>
+				</div><!--
+				--><div class="col-md-6 text-center animated bounceInRight v-align">
+					<h2>Entwickler</h2>
+					<img src="{{url_for('static', filename='img/cookie.jpg')}}" class="img-circle"><br />
+					<p>Hi, Ich bin <strong>Cookie</strong>.<br /> Ich habe die erste Version von mee6 in 3 Tagen entwickelt. </p>
+					<h2>Übersetzer</h2>
+					<img src="{{url_for('static', filename='img/schlaubi.jpg')}}" height="128" width="128" class="img-circle"><br />
+					<p>Hi, Ich bin <strong>Schlaubi</strong>.<br /> Und ich habe den Bot übersetzt. <br /> Wenn du einen Fehler gefunden hast schreib <br />mich doch auf meinem Discord Server an. </p>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

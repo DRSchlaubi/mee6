@@ -1,0 +1,41 @@
+{% extends 'dash_base.html' %}
+{% block dash_content %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<h1>Wie geht das?</h1>
+				<div class="panel panel-primary">
+					<div class="panel-body">
+						Hier findest du die  <strong>logs</strong> deines Servers.<br /><br />
+						<strong>Logs</strong> sind sortiert nach <strong>date</strong> und <strong>channel</strong>.<br /><br />
+						<strong>Mee6</strong> Nutzt dass UTC Zeit Format.<br / ><br />
+					</div>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<h1>Logs <a href="?json" class="btn btn-default btn-xs">json</a></h1>
+				<div class="panel-group" id="accordion">
+					{% for item in payload %}
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="pannel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#{{item.dt}}" class="collapsed">{{item.dt}}</a>
+								</h4>
+							</div>
+							<div id="{{item.dt}}" class="panel-collapse collapse" style="height:0px;">
+								<div class="panel-body">
+									{% for channel in item.channels %}
+										<a href="{{ url_for('message_logs', server_id=server.id, dt=item.dt, channel=channel)}}">#{{channel}}</a><br/>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+
+	</div>
+	</div>
+
+{% endblock %}

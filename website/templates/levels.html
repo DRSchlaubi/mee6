@@ -1,0 +1,98 @@
+{% extends 'dash_base.html' %}
+{% block dash_content %}
+{% set csrf =  csrf_token() %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<h1>Wie geht das? kann man das essen?</h1>
+				<div class="panel panel-primary">
+					<div class="panel-body">
+						Essen kannst du unsere <strong>XP</strong> leider nicht aber du kannst damit Ränge und Level verdienen.
+						F&uuml;r jede Nachricht bekommst du eine zufällige Anzahl (zwischen 15 & 25) an <strong>Leveln</strong> mit denen du im 
+						<strong>Leaderboard</strong> aufsteigen kannst
+					</div>
+				</div>
+				<h2>Belohnungen</h2>
+				<div class="panel panel-primary">
+					<div class="panel-body">
+						{% for lvl in reward_levels %}
+							<h4>Lvl. {{lvl}}</h4>
+							{% for role in reward_roles[lvl] %}
+								<strong style="color:#{{role.color}}">
+									{{role.name}}
+								</strong><br />
+							{% endfor %}
+						{% else %}
+							<center>
+							Dieser Server nutzt dieses Feature nicht :'(
+							</center>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<h1>Leaderboard {% if is_admin %}
+						<small><a class="btn btn-warning btn-xs reset-all" href="{{url_for('reset_all_players', server_id=server.id)}}?csrf={{csrf | string | urlencode }}">RESET ALL</a></small>
+					{% endif %}
+				</h1>
+				<div class="list-group">
+					{% for player in players %}
+						<div class="list-group-item">
+							<div class="row">
+								<div class="col-md-1 col-sm-1 col-xs-1">
+									<h3><strong>#{{loop.index}}</strong></h3>
+								</div>
+								<div class="col-md-1 col-sm-1 hidden-xs" style="padding:0">
+									{% if player['avatar'] is not none %}
+										<img src="https://cdn.discordapp.com/avatars/{{player['id']}}/{{player['avatar']}}.jpg" onerror="this.src='{{url_for('static', filename='img/no_logo.png')}}'" style="width:100%" class="img-circle">
+									{%else%}
+										<img src="{{url_for('static', filename='img/no_logo.png')}}" style="width:100%" class="img-circle">
+									{%endif%}
+								</div>
+								<div class="col-md-4 col-sm-4 col-xs-5">
+									<h3>{{player['name']}} <small>#{{player['discriminator']}}</small></h3>
+								</div>
+								<div class="col-md-4 col-sm-4 col-xs-4">
+									<center><h5>{{player['xp']}} / {{player['lvl_xp']}} <strong>XP</strong> [{{player['total_xp']}} total]</h5></center>
+									<div class="progress progress-striped">
+										<div class="progress-bar progress-bar-info" style="width: {{player['xp_percent']}}%"></div>
+									</div>
+								</div>
+								<div class="col-md-2 col-sm-2 col-xs-2">
+									<h3>Level {{player['lvl']}}
+										{% if is_admin %}
+										<small><a class="reset" href="{{url_for('reset_player', player_id=player['id'], server_id=server.id)}}?csrf={{csrf | string | urlencode}}">reset</a></small>
+										{% endif %}
+									</h3>
+								</div>
+							</div>
+						</div>
+					{% else %}
+						<center>
+							<h3>Hier gibt's noch nichts zu sehen ;)</h3>
+						</center>
+					{% endfor %}
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<script>
+$('.reset').click(function(e) {
+	e.preventDefault();
+	var $link = $(this);
+	bootbox.confirm("Willst du die Level wirklick zurücksetzen armer User:'(", function (confirmation) {
+		confirmation && document.location.assign($link.attr('href'));
+	});
+});
+$('.reset-all').click(function(e) {
+	e.preventDefault();
+	var $link = $(this);
+	bootbox.confirm("Willst du die Level wirklick zurücksetzen arme User:'(", function (confirmation) {
+		confirmation && document.location.assign($link.attr('href'));
+	});
+});
+
+	</script>
+
+{% endblock %}

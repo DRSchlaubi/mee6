@@ -1,0 +1,67 @@
+{% extends 'dash_base.html' %}
+{% block dash_content %}
+	<div class="container">
+		<div class="row">
+			{% include 'sidebar.html' %}
+			{% set csrf =  csrf_token() %}
+				<div class="col-md-8">
+					<h3>Welcome <a href="?disable=1" class="btn btn-warning btn-xs">Deaktivieren</a></h3>
+					{% include 'flash.html' %}
+					<form id="welcome" method="POST" action="{{url_for('update_welcome', server_id=server['id'])}}">
+						<div class="form-group">
+							<input name=_csrf_token type=hidden value="{{ csrf }}">
+							<label class="control-label" for="welcome_message">Begrüßungsnachricht </label>
+							<textarea class="form-control input-lg welcome_message" name="welcome_message" id="welcome_message">{{welcome_message}}</textarea>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" name="private" {% if private %}checked{% endif %}> Als private Nachricht senden
+								</label>
+							</div>
+							<div class="well well-sm">
+								<strong>Tips: </strong> <i>{user}</i> refers to the new member, <i>{server}</i> to your server name.
+							</div>
+							<label class="control-label" for="gb_message">Verabschiedungs Nachricht</label>
+							<textarea class="form-control input-lg gb_message" name="gb_message" id="gb_message">{{gb_message}}</textarea>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" name="gb_enabled" {% if gb_enabled %}checked{% endif %}> Aktiviert
+								</label>
+							</div>
+							<div class="well well-sm">
+								<strong>Tips: </strong> <i>{user}</i> refers to the leaving member, <i>{server}</i> to your server name.
+							</div>
+							<label class="control-label" for="channel_name">Welcome/Good-Bye channel</label>
+							<select class="input-lg form-control" name="channel">
+								{% for channel in guild_channels %}
+									<option value="{{channel.id}}"{%if channel.id == welcome_channel.id%} selected{%endif%}>#{{channel.name}}</option>
+								{% endfor %}
+							</select>
+							<div class="well well-sm">
+								In diesem Channel werden die Nachrichten gepostet.<br />
+								<strong>Warning: </strong>Mee6 sollte Schreibrechte haben
+							</div>
+							<button type="submit" class="btn btn-primary">Aktualisieren</button>
+						</div>
+					</form>
+				</div>
+
+		</div>
+	</div>
+<script>
+$(function(){
+	$(".welcome_message").mention({
+		queryBy: ['name', 'username'],
+		users: {{guild_members|tojson|safe}}
+	});
+});
+$(function(){
+	$(".gb_message").mention({
+		queryBy: ['name', 'username'],
+		users: {{guild_members|tojson|safe}}
+	});
+});
+</script>
+	<script src="{{url_for('static', filename='js/mention.js')}}"></script>
+	<script src="{{url_for('static', filename='js/bootstrap-typeahead.js')}}"></script>
+	<link href="{{url_for('static', filename='css/recommended-styles.css')}}" rel="stylesheet">
+{% endblock %}

@@ -1,0 +1,81 @@
+{% import 'macros/plugin.html' as plugin %}
+<h3>Plugins</h3>
+<div class="list-group">
+	{{ plugin.view(
+	'Commands',
+	icon='exclamation',
+	view='plugin_commands',
+	description='Erstelle eigene Befehle!',
+	server=server,
+	enabled_plugins=enabled_plugins
+	)}}
+	{{ plugin.view(
+	'Levels',
+	icon='trophy',
+	view='plugin_levels',
+	description='Biete deinen Usern ein Levelsystem !',
+	server=server,
+	enabled_plugins=enabled_plugins
+	)}}
+	{{ plugin.view(
+	'Moderator',
+	icon='legal',
+	view='plugin_moderator',
+	description='Moderations hilfen! slowmode/clear/mute',
+	server=server,
+	enabled_plugins=enabled_plugins
+	)}}
+	{{ plugin.view(
+	'Music',
+	icon='music',
+	buff="music",
+	view='plugin_music',
+	description='Leiderdeaktiviert ;( sorry!',
+	server=server,
+	enabled_plugins=enabled_plugins
+	)}}
+	{{ plugin.view(
+	'Search',
+	icon='search',
+	pretty_name='Search Anything',
+	view='plugin_search',
+	description='Durchsuche yutube imgur und co',
+	server=server,
+	enabled_plugins=enabled_plugins
+	)}}
+{{ plugin.view(
+	'Help',
+	icon='question',
+	pretty_name='Help Me!',
+	view='plugin_help',
+	description='Aktiviert den  <strong>!help</strong> command.',
+	server=server,
+	enabled_plugins=enabled_plugins
+	)}}
+	{{ plugin.view(
+	'Streamers',
+	pretty_name='Twitch & co.',
+	icon='twitch',
+	view='plugin_streamers',
+	description='Werde benachrichtigt wenn der beste Streamer anfängt zu streamen',
+	server=server,
+	enabled_plugins=enabled_plugins
+	)}}
+	{{plugin.view(
+	'Reddit',
+	icon='reddit',
+	pretty_name='Reddit',
+	view='plugin_reddit',
+	description='Werde über neue Subredits benachrichtigt!',
+	server=server,
+	enabled_plugins=enabled_plugins
+	)}}
+	{{ plugin.view(
+	'Welcome',
+	icon="hand-spock-o",
+	view='plugin_welcome',
+	description='Begrüße jeden neuen User!',
+	server=server,
+	enabled_plugins=enabled_plugins
+	)}}
+	</div>

@@ -1,0 +1,21 @@
+{% extends 'dash_base.html' %}
+{% block dash_content %}
+	<div class="container">
+		<div class="row">
+			{% include 'sidebar.html' %}
+
+			<div class="col-md-8">
+				<h3>Animu and Mango <a href="?disable=1" class="btn btn-warning btn-xs">Deaktivieren</a></h3>
+				{% include 'flash.html' %}
+				<center>
+					<p>
+					<img src="https://media.giphy.com/media/fraFWJOtGih9u/giphy.gif">
+					<h1>Benutze die Befehle <strong>!animu </strong> und <br /><strong>!mango Love Hina</strong> ;) !</h1>
+					</p>
+				</center>
+			</div>
+
+		</div>
+	</div>
+
+{% endblock %}
