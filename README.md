@@ -2,10 +2,7 @@
 ![Mee6](http://mee6.xyz/static/img/meeseeks.png)
 
 ## What is it?
-Mee6 is a Discord bot that lets you easily add your own commands to your server
-through a user-friendly dashboard. But this is just one of the numerous features 
-of this bot.
-
+Mee6 ist ein Discordbot mit vielen Funktionen [Mehr](http://mee6.schlb.pw/about)
 ## Testimonials (OMG OMG OMG...)
 ![Jason](http://i.imgur.com/sXXQy61.png)
 
