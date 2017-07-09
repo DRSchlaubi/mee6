@@ -3,6 +3,7 @@
 
 ## What is it?
 Mee6 ist ein Discordbot mit vielen Funktionen [Mehr](http://mee6.schlb.pw/about)
+Developer: [The almighty Cookie](https://github.com/cookkkie/mee6) @cookkkie
 ## Testimonials (OMG OMG OMG...)
 ![Jason](http://i.imgur.com/sXXQy61.png)
 
